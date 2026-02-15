@@ -1,0 +1,4 @@
+- name: Install Nginx on CentOS
+  ansible.builtin.yum:
+    name: nginx
+    state: present

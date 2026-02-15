@@ -1,0 +1,4 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for nginx_role
+nginx_port: 80
