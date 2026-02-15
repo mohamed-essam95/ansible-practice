@@ -1,0 +1,26 @@
+- name: Playbook with handler triggered by multiple notifications
+  hosts: web_servers
+  become: yes
+
+  vars:
+    config_files:
+    - src: files/app.conf
+      dest: /etc/app.conf
+    - src: files/db.conf
+      dest: /etc/db.conf
+
+  tasks:
+  - name: Copy configuration files
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      owner: root
+      group: root
+      mode: '0644'
+    loop: "{{ config_files }}"
+    notify: restart app service
+
+  handlers:
+  - name: restart app service
+    debug:
+      msg: "Handler triggered: service would be restarted now!"

@@ -1,0 +1,24 @@
+- name: Conditional webserver installation
+  hosts: web_servers
+  become: yes
+
+  vars:
+    skip_webserver: false  
+
+  tasks:
+    - name: Install nginx on Debian-based systems
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+      when:
+        - ansible_facts['os_family'] == "Debian"
+        - not skip_webserver
+
+    - name: Install httpd on RedHat-based systems
+      yum:
+        name: httpd
+        state: present
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - not skip_webserver

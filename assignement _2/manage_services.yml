@@ -1,0 +1,22 @@
+- name: Manage services based on a dictionary
+  hosts: web_servers
+  become: yes
+
+  vars:
+    services:
+      nginx: started
+      apache2: stopped
+      cron: started
+
+  tasks:
+  - name: Loop through services and print their desired state
+    debug:
+      msg: "Service {{ item.key }} should be {{ item.value }}"
+    loop: "{{ services | dict2items }}"
+
+  - name: Ensure services are in the desired state 
+    service:
+      name: "{{ item.key }}"
+      state: "{{ item.value }}"
+    loop: "{{ services | dict2items }}"
+    ignore_errors: yes 

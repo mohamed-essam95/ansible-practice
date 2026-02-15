@@ -1,0 +1,19 @@
+- name: Check if Nginx is installed
+  hosts: web_servers
+  become: yes
+
+  tasks:
+    - name: Check nginx installation
+      shell: nginx -v
+      register: nginx_check
+      ignore_errors: yes   
+
+    - name: Print success message if nginx is installed
+      debug:
+        msg: "✅ Nginx is installed!"
+      when: nginx_check.rc == 0
+
+    - name: Print warning if nginx is not installed
+      debug:
+        msg: "⚠️ Nginx is NOT installed!"
+      when: nginx_check.rc != 0

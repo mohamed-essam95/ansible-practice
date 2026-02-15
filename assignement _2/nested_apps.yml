@@ -1,0 +1,24 @@
+- name: Working with Nested Data Structures
+  hosts: web_servers
+  gather_facts: false
+
+  vars:
+    apps:
+    - name: app_one
+      port: 8080
+      packages: [ nginx, curl ]
+
+    - name: app_two
+      port: 9090
+      packages: [ apache2, git ]
+
+    - name: app_three
+      port: 7070
+      packages: [ mysql-client, vim ]
+
+  tasks:
+  - name: Print second app name and its first package
+    debug:
+      msg:
+      - "Second App Name: {{ apps[1].name }}"
+      - "First Package of Second App: {{ apps[1].packages[0] }}"

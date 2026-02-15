@@ -1,0 +1,33 @@
+- name: Create active users only
+  hosts: web_servers
+  become: yes
+
+  vars:
+    users:
+    - name: alice
+      shell: /bin/bash
+      active: true
+    - name: bob
+      shell: /bin/zsh
+      active: false
+    - name: carol
+      shell: /bin/bash
+      active: true
+    - name: dave
+      shell: /bin/sh
+      active: false
+
+  tasks:
+  - name: Create user accounts for active users
+    user:
+      name: "{{ item.name }}"
+      shell: "{{ item.shell }}"
+      state: present
+    loop: "{{ users }}"
+    when: item.active
+
+  - name: Print message for skipped users
+    debug:
+      msg: "Skipping user {{ item.name }} because they are inactive."
+    loop: "{{ users }}"
+    when: not item.active

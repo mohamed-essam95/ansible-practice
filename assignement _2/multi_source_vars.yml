@@ -1,0 +1,17 @@
+- name: Multi-Source Variables Playbook
+  hosts: web_servers
+  gather_facts: false
+
+  vars:
+    app_name: my_application   
+
+  vars_files:
+    - vars/app_config.yml     
+
+  tasks:
+    - name: Print variables from different sources
+      debug:
+        msg:
+          - "App Name: {{ app_name }}"
+          - "App Port: {{ app_port }}"
+          - "Environment: {{ env }}"

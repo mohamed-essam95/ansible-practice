@@ -1,0 +1,25 @@
+- name: Complex conditionals based on hostname and environment
+  hosts: web_servers
+  become: yes
+
+  vars:
+    allowed_envs:
+    - production
+    - staging
+    environment: production
+
+  tasks:
+  - name: Task runs only if hostname contains "web"
+    debug:
+      msg: "This host {{ inventory_hostname }} is a web server"
+    when: "'web' in inventory_hostname"
+
+  - name: Task runs only if environment is allowed
+    debug:
+      msg: "Environment {{ environment }} is allowed"
+    when: environment in allowed_envs
+
+  - name: Task runs if hostname contains "db" AND environment is NOT development
+    debug:
+      msg: "This host {{ inventory_hostname }} is a DB server in a non-development environment"
+    when: "'db' in inventory_hostname and environment != 'development'"

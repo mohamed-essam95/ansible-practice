@@ -1,0 +1,40 @@
+---
+- name: Demonstrate normal vs forced handler execution
+  hosts: web_servers
+  become: yes
+
+  vars:
+    config_file: /tmp/demo.conf
+
+  tasks:
+  - name: Update configuration file (normal scenario)
+    copy:
+      dest: "{{ config_file }}"
+      content: "normal scenario config"
+    notify: reload configuration
+
+  - name: Task after normal update (before flush)
+    debug:
+      msg: "This runs BEFORE the handler in normal execution"
+
+  - name: Force handlers to run immediately
+    meta: flush_handlers
+
+  - name: Debug to prove handler already ran
+    debug:
+      msg: "✅ Handler already ran after flush_handlers"
+
+  - name: Update configuration file (forced execution scenario)
+    copy:
+      dest: "{{ config_file }}"
+      content: "forced execution config"
+    notify: reload configuration
+
+  - name: Another task after forced update
+    debug:
+      msg: "This runs BEFORE handler unless we flush again"
+
+  handlers:
+  - name: reload configuration
+    debug:
+      msg: "🔄 Configuration reloaded!"
