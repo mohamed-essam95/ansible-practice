@@ -3,10 +3,10 @@
   gather_facts: false
 
   vars:
-    app_name: my_application   
+    app_name: my_application
 
   vars_files:
-    - vars/app_config.yml     
+    - vars/app_config.yml
 
   tasks:
     - name: Print variables from different sources

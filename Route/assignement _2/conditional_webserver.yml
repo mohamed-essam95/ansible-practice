@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    skip_webserver: false  
+    skip_webserver: false
 
   tasks:
     - name: Install nginx on Debian-based systems
