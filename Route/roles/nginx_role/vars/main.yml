@@ -1,5 +1,0 @@
-#SPDX-License-Identifier: MIT-0
----
-# vars file for nginx_role
-nginx_root: /var/www/html
-nginx_package: nginx
