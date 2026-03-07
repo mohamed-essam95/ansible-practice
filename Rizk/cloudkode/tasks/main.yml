@@ -1,11 +1,19 @@
 ---
-- name: Install Apache
-  apt:
-    name: apache2
-    state: present # Ensure apache2 is installed
+# - name: Install Apache
+#   apt:
+#     name: apache2
+#     state: present # Ensure apache2 is installed
 
-- name: Start Apache service
-  service:
-    name: apache2
-    state: started # Make sure the service is running
-    enabled: yes # Enable the service to start on boot
+# - name: Start Apache service
+#   service:
+#     name: apache2
+#     state: started # Make sure the service is running
+#     enabled: yes # Enable the service to start on boot
+
+- name: copy test.txt to web servers
+  copy:
+    src: test.txt  # Source file inside the role's files directory
+    dest: /tmp/test.txt # Destination path on the target web servers
+    owner: root
+    group: root
+    mode: '0644'

@@ -3,4 +3,5 @@
   hosts: web
   become: yes # Run tasks with sudo/root privilege
   roles:
-    - cloudkode # Include the cloudkode role to execute its tasks
+   # - cloudkode # Include the cloudkode role to execute its tasks
+    - KvSanojKV.apache_webserver
