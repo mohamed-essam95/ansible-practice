@@ -1,2 +1,6 @@
 ssh_commands.txt
 ssh_keys.txt
+ansible_key.pub
+ansible_key
+Dockerfile
+/ansible_ssh_keys
